@@ -10,7 +10,7 @@ DIR="${HOME}/downloads/${GITHUB_REPO}"
 _process() {
 	echo "$(date) PROCESSING:  $@" >>$LOG
 	printf "$(tput setaf 6) %s...$(tput sgr0)\n" "$@"
-
+}
 
 _success() {
 	local message=$1
@@ -168,7 +168,7 @@ setup_git_authorship() {
 
 install() {
 	download_dotfiles
-	link_dotfiles
+	# link_dotfiles
 	# install_homebrew
 	# install_node
 	# install_formulae
