@@ -5,7 +5,7 @@ GITHUB_REPO="dotfiles-starter-kit"
 USER_GIT_AUTHOR_NAME="jonkinz"
 USER_GIT_AUTHOR_EMAIL="122027005+jonkinz@users.noreply.github.com"
 
-DIR="${HOME}/downloads/${GITHUB_REPO}"
+DIR="${HOME}/tempConfigDir/${GITHUB_REPO}"
 
 _process() {
 	echo "$(date) PROCESSING:  $@" >>$LOG
@@ -168,7 +168,7 @@ setup_git_authorship() {
 
 install() {
 	download_dotfiles
-	# link_dotfiles
+	link_dotfiles
 	# install_homebrew
 	# install_node
 	# install_formulae
