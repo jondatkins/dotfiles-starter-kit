@@ -168,7 +168,7 @@ setup_git_authorship() {
 
 install() {
 	download_dotfiles
-	link_dotfiles
+	# link_dotfiles
 	# install_homebrew
 	# install_node
 	# install_formulae
