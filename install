@@ -5,7 +5,9 @@ GITHUB_REPO="dotfiles-starter-kit"
 USER_GIT_AUTHOR_NAME="jonkinz"
 USER_GIT_AUTHOR_EMAIL="122027005+jonkinz@users.noreply.github.com"
 
-DIR="${HOME}/tempConfigDir/${GITHUB_REPO}"
+DIR="${HOME}/${GITHUB_REPO}"
+CONFIG_DIR="${HOME}/.config"
+mkdir ${HOME}/.config
 
 _process() {
 	echo "$(date) PROCESSING:  $@" >>$LOG
@@ -43,7 +45,7 @@ link_dotfiles() {
 
 		# Set variable for list of files
 		files="${DIR}/opt/files"
-
+    echo "${files}"
 		# Store IFS separator within a temp variable
 		OIFS=$IFS
 		# Set the separator to a carriage return & a new line break
@@ -60,7 +62,45 @@ link_dotfiles() {
 				# create an array of line items
 				file=(${links[$index]})
 				# Create symbolic link
-				ln -fs "${DIR}/${file[0]}" "${HOME}/${file[1]}"
+				ln -fs "${DIR}/${file[0]}" "${CONFIG_DIR}/${file[1]}"
+			done
+			# set separater back to carriage return & new line break
+			IFS=$'\r\n'
+		done
+
+		# Reset IFS back
+		IFS=$OIFS
+
+		source "${HOME}/.bash_profile"
+		[[ $? ]] && _success "All files have been copied"
+	fi
+}
+
+unlink_dotfiles() {
+
+	if [[ -f "${DIR}/opt/files" ]]; then
+		_process "→ removing symlinks for dotfiles in /configs"
+
+		# Set variable for list of files
+		files="${DIR}/opt/files"
+    echo "${files}"
+		# Store IFS separator within a temp variable
+		OIFS=$IFS
+		# Set the separator to a carriage return & a new line break
+		# read in passed-in file and store as an array
+		IFS=$'\r\n'
+		links=($(cat "${files}"))
+
+		# Loop through array of files
+		for index in ${!links[*]}; do
+			for link in ${links[$index]}; do
+				_process "→ Unlinking ${links[$index]}"
+				# set IFS back to space to split string on
+				IFS=$' '
+				# create an array of line items
+				file=(${links[$index]})
+				# Remove symbolic link
+				rm "${CONFIG_DIR}/${file[1]}"
 			done
 			# set separater back to carriage return & new line break
 			IFS=$'\r\n'
@@ -93,6 +133,10 @@ install_node() {
 		[[ $? ]] &&
 			_success "Installed npm"
 	fi
+}
+
+install_arch_dependencies() {
+  source installDeps.sh
 }
 
 install_formulae() {
@@ -168,7 +212,9 @@ setup_git_authorship() {
 
 install() {
 	download_dotfiles
-	# link_dotfiles
+	unlink_dotfiles
+	link_dotfiles
+  install_arch_dependencies
 	# install_homebrew
 	# install_node
 	# install_formulae
