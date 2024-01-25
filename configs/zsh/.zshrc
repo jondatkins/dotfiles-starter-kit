@@ -23,13 +23,11 @@ source ${XDG_CONFIG_HOME}/.p10k2.zsh
 # setopt PROMPT_SUBST
 # PROMPT='%F{green}%*%f %F{blue}%~%f %F{red}${vcs_info_msg_0_}%f$ '
 
-# This should be in zshenv, and in the zsh style
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 export PATH=HOME/.local/share/nvim/mason/bin:$PATH
 export PATH=HOME/.cargo/bin:$PATH
-# export PATH=HOME/.local/share/zap:$PATH
 export PATH=HOME/.local/bin/java/jdk-20.0.1/bin:$PATH
 export PATH=HOME/.local/bin/gradle/gradle-8.1.1/bin:$PATH
 # no beeping
@@ -73,9 +71,9 @@ zle_highlight=('paste:none')
 # Options to fzf command
 # export FZF_COMPLETION_OPTS='--border --info=inline'
 # export FZF_PREVIEW='--preview "bat --style=numbers --color=always --line-range :500 {}"'
-
-source "${ZDOTDIR}/.my_aliases"
-source "${ZDOTDIR}/.my_functions"
+for config (~/.config/zsh/*.zsh) source $config
+# source "${ZDOTDIR}/.my_aliases"
+# source "${ZDOTDIR}/.my_functions"
 # source ~/bin/zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
