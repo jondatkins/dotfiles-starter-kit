@@ -69,6 +69,22 @@ download_dotfiles() {
 	cd "${DOTFILES_DIR}"
 }
 
+download_dotfiles_with_git() {
+  _process "→ Installing git if needed"
+  sudo pacman -S --needed --noconfirm git
+  cd ${HOME}
+  # rm -rf ${DOTFILES_DIR}
+	_process "→ cloing dotfiles repo from:"
+	_process "→ https://github.com/${GITHUB_USER}/${GITHUB_REPO}"
+	# curl -#fLo /tmp/${GITHUB_REPO}.tar.gz "https://github.com/${GITHUB_USER}/${GITHUB_REPO}/tarball/main"
+  git clone "https://github.com/${GITHUB_USER}/${GITHUB_REPO}" ${DOTFILES_DIR}
+ 
+	[[ $? ]] && _success "${DOTFILES_DIR} created, repository cloned"
+
+	# Change to the dotfiles directory
+	cd "${DOTFILES_DIR}"
+}
+
 # Takes a boolean arg. If true, link the files, if false, unlink them.
 link_dotfiles() {
 	# symlink files to the HOME directory.
@@ -106,6 +122,7 @@ link_dotfiles() {
           echo "configs/zsh zsh /home/dave/.config"
           echo "Your config is:"
           echo "$configFilePath  $symLinkFile $symLinkPath"
+          return
         fi
         if [ $1 = false ]
         then
@@ -113,7 +130,13 @@ link_dotfiles() {
           rm  ${file[2]}/${file[1]}
         else
           _process "→ Linking ${links[$index]}"
-          ln -fs "${DOTFILES_DIR}/${file[0]}" "${file[2]}/${file[1]}"
+          # Remove any existing symlinks before making a new one. The default behaviour
+          # where the link is a dir is to create the link inside the dir if it exists,
+          # resulting in the link being created in our real folder on the second pass.
+          # It is possible to use flags '-n' and '-T' here, but just removing the link
+          # first makes more sense, I think.
+          rm  ${file[2]}/${file[1]}
+          ln -fsnT "${DOTFILES_DIR}/${file[0]}" "${file[2]}/${file[1]}"
         fi
 			done
 			# set separater back to carriage return & new line break
@@ -238,7 +261,7 @@ install() {
 
   if [ "$download" == true ]; then
     echo "download dotfiles here"
-    download_dotfiles
+    download_dotfiles_with_git
   fi
   if [ "$link" == true ]; then
     echo "link dotfiles"
@@ -255,3 +278,4 @@ install() {
 }
 
 install
+
