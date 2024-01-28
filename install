@@ -70,14 +70,24 @@ download_dotfiles() {
 }
 
 download_dotfiles_with_git() {
+  # Don't download if dotfiles dir is already installed.
+  if [ -d "$DOTFILES_DIR" ]; then
+    _process "→ $DOTFILES_DIR already downloaded"
+    return
+  fi
   _process "→ Installing git if needed"
-  sudo pacman -S --needed --noconfirm git
+  if ! command -v git &> /dev/null
+  then
+    _process "→ Installing git"
+    sudo pacman -S --needed --noconfirm git
+  else
+    _process "→ git is already installed"
+  fi
   cd ${HOME}
   # rm -rf ${DOTFILES_DIR}
 	_process "→ cloing dotfiles repo from:"
 	_process "→ https://github.com/${GITHUB_USER}/${GITHUB_REPO}"
-	# curl -#fLo /tmp/${GITHUB_REPO}.tar.gz "https://github.com/${GITHUB_USER}/${GITHUB_REPO}/tarball/main"
-  git clone "https://github.com/${GITHUB_USER}/${GITHUB_REPO}" ${DOTFILES_DIR}
+  # git clone "https://github.com/${GITHUB_USER}/${GITHUB_REPO}" ${DOTFILES_DIR}
  
 	[[ $? ]] && _success "${DOTFILES_DIR} created, repository cloned"
 
