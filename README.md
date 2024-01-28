@@ -11,8 +11,8 @@ A boilerplate for setting up your dotfiles that can be easily synced across your
 Make sure to update the username in the command below with your GitHub username.
 
 ```
-$ bash -c "$(curl -#fL raw.github.com/jonkinz/dotfiles-starter-kit/main/install)"
+bash -c "$(curl -#fL raw.github.com/jonkinz/dotfiles-starter-kit/main/install)"
 ```
-## This is based on the tutorial at :
+# This is based on the tutorial at :
 
 https://freddiecarthy.com/blog/make-your-dotfiles-portable-with-git-and-a-simple-bash-script
