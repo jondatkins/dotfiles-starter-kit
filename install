@@ -255,8 +255,13 @@ setup_git_authorship() {
 # at all. 
 install() {
   if [ "$runall" == true ]; then
-    # download_dotfiles
-    echo "run all install functions"
+	_process "→ run all install functions"
+  download_dotfiles_with_git
+  link_dotfiles
+  # install_arch_dependencies
+    # echo "run all install functions"
+    _process "→ dotfiles downloaded and linked"
+    return
   fi
 
   if [ "$download" == true ]; then
