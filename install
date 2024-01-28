@@ -268,13 +268,13 @@ install() {
     echo "download dotfiles here"
     download_dotfiles_with_git
   fi
-  if [ "$link" == true ]; then
-    echo "link dotfiles"
-    link_dotfiles true
-  fi
   if [ "$unlink" == true ]; then
     echo "unlink dotfiles"
     link_dotfiles false
+  fi
+  if [ "$link" == true ]; then
+    echo "link dotfiles"
+    link_dotfiles true
   fi
   if [ "$install" == true ]; then
     echo "install deps"
