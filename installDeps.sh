@@ -33,7 +33,7 @@ yay -S --needed --noconfirm zsh-theme-powerlevel10k-git # Install the powerlevel
 # p10k configure                                                                          # Configure the Powerlevel10k prompt.
 
 sudo pacman --needed --noconfirm -S tmux                          # Install the terminal multiplexer. (We'll have some basic stuff set up in `~/.tmux.conf`)
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm # Install the TMUX plugin manager.
+git clone https://github.com/tmux-plugins/tpm ~/bin/tmuxPlugins/tpm # Install the TMUX plugin manager.
 sudo pacman --needed --noconfirm -S powerline                     # Install powerline. The command to enable it for tmux should be in `~/.tmux.conf`.
 sudo pacman --needed --noconfirm -S lsd                           # Use lsd (not that LSD! This one make the ls command look cool.) (I added commands to ~/.bash_aliases to use it.)
 sudo pacman --needed --noconfirm -S jq                            # Command-line JSON processor. This will be useful later. (There's also `hq` and `yq`, but I haven't tried those yet.)

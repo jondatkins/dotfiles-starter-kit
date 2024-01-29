@@ -1,7 +1,5 @@
-configs/git git /home/jon/.config
-configs/nvim nvim /home/jon/.config
-configs/zsh/.p10k.zsh .p10k.zsh /home/jon/.config
-configs/zsh/.p10k2.zsh .p10k2.zsh /home/jon/.config
-configs/zsh zsh /home/jon/.config
-configs/tmux tmux /home/jon/.config
-configs/.zshenv .zshenv /home/jon
+configs/git /home/jon/.config/git
+configs/nvim /home/jon/.config/nvim
+configs/zsh /home/jon/.config/zsh
+configs/tmux /home/jon/.config/tmux
+configs/.zshenv /home/jon/.zshenv

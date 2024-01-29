@@ -4,8 +4,8 @@
 # if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   # source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
-source ${XDG_CONFIG_HOME}/.p10k2.zsh
-# source ${XDG_CONFIG_HOME}/.p10k.zsh
+# source ${XDG_CONFIG_HOME}/zsh/.p10k2.zsh
+# source ${XDG_CONFIG_HOME}/zsh/.p10k.zsh
 
 # Created by Zap installer
 # [ -f "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh" ] && source "${XDG_DATA_HOME:-$HOME/.local/share}/zap/zap.zsh"
@@ -81,6 +81,14 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # source ~/bin/zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval "$(zoxide init zsh)"
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
-# [[ ! -f ~/.config/.p10k.zsh ]] || source ~/.config/.p10k.zsh
+# [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k2.zsh
+# [[ -f ~/.config/zsh/.p10k2.zsh ]] && source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+# source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
  # source ~/powerlevel10k/powerlevel10k.zsh-theme
-source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+if [[ -f $HOME/.config/zsh/.p10k2.zsh ]]
+then
+  source $HOME/.config/zsh/.p10k2.zsh
+  source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+else
+  echo "No file at $HOME/.config/zsh/.p10k2.zsh"
+fi

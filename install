@@ -5,12 +5,8 @@ GITHUB_REPO="dotfiles-starter-kit"
 USER_GIT_AUTHOR_NAME="jonkinz"
 USER_GIT_AUTHOR_EMAIL="122027005+jonkinz@users.noreply.github.com"
 
-# DOTFILES_DIR="${HOME}/dotfiles_download/${GITHUB_REPO}"
 DOTFILES_DIR="${HOME}/${GITHUB_REPO}"
 CONFIG_DIR="${HOME}/.config"
-mkdir ${HOME}/.config
-LINK_DOTFILES="link"
-UNLINK_DOTFILES="unlink"
 
 download=false
 link=false
@@ -84,30 +80,35 @@ download_dotfiles_with_git() {
     _process "→ git is already installed"
   fi
   cd ${HOME}
-  # rm -rf ${DOTFILES_DIR}
+  rm -rf ${DOTFILES_DIR}
 	_process "→ cloing dotfiles repo from:"
 	_process "→ https://github.com/${GITHUB_USER}/${GITHUB_REPO}"
-  # git clone "https://github.com/${GITHUB_USER}/${GITHUB_REPO}" ${DOTFILES_DIR}
+  git clone "https://github.com/${GITHUB_USER}/${GITHUB_REPO}" ${DOTFILES_DIR}
  
 	[[ $? ]] && _success "${DOTFILES_DIR} created, repository cloned"
-
 	# Change to the dotfiles directory
 	cd "${DOTFILES_DIR}"
 }
 
 # Takes a boolean arg. If true, link the files, if false, unlink them.
 link_dotfiles() {
+  # Create config dir here if it doesn't already exist
+  if [ ! -d $CONFIG_DIR ]; then
+    _process "→ $CONFIG_DIR "
+    mkdir $CONFIG_DIR
+    return
+  fi
 	# symlink files to the HOME directory.
 	if ! [[ -f "${DOTFILES_DIR}/opt/files" ]]
   then
     echo "no config file ${DOTFILES_DIR}/opt/files"
   else
-    if [ $1 = false ]
-    then
-		  _process "→ Unlinking dotfiles in /configs"
-    else
-		  _process "→ Symlinking dotfiles in /configs"
-    fi
+    # if [ $1 = false ]
+    # then
+    # _process "→ Unlinking dotfiles in /configs"
+    # else
+    # _process "→ Symlinking dotfiles in /configs"
+    # fi
 		# Set variable for list of files
 		files="${DOTFILES_DIR}/opt/files"
 		# Store IFS separator within a temp variable
@@ -124,29 +125,37 @@ link_dotfiles() {
 				# create an array of line items
 				file=(${links[$index]})
         configFilePath=${file[0]}
-        symLinkFile=${file[1]}
-        symLinkPath=${file[2]}
-        if  [ ! $configFilePath ] || [ ! $symLinkFile ] || [ ! $symLinkPath ] 
+        symLinkFilePath=${file[1]}
+        if  [ ! $configFilePath ] || [ ! $symLinkFilePath ]
         then
-          echo "link script expects files data in the form:"
-          echo "configs/zsh zsh /home/dave/.config"
-          echo "Your config is:"
-          echo "$configFilePath  $symLinkFile $symLinkPath"
+          process "→ link script expects 'files' data in the form:"
+          process "→ path/to/config path/to/symlink"
+          process "→ Your config is:"
+          process "→ ${configFilePath} ${symLinkFilePath}"
           return
         fi
-        if [ $1 = false ]
+        if [ "$1" = false ]
         then
-          _process "→ Unlinking ${links[$index]}"
-          rm  ${file[2]}/${file[1]}
+          if [ -f ${symLinkFilePath} ]
+          then
+            _process "→ removing symlink ${symLinkFilePath}"
+            rm ${symLinkFilePath}
+          fi
         else
-          _process "→ Linking ${links[$index]}"
+          # _process "→ Linking ${links[$index]}"
           # Remove any existing symlinks before making a new one. The default behaviour
           # where the link is a dir is to create the link inside the dir if it exists,
           # resulting in the link being created in our real folder on the second pass.
           # It is possible to use flags '-n' and '-T' here, but just removing the link
           # first makes more sense, I think.
-          rm  ${file[2]}/${file[1]}
-          ln -fsnT "${DOTFILES_DIR}/${file[0]}" "${file[2]}/${file[1]}"
+
+          if [ -f ${symLinkFilePath} ]
+          then
+            _process "→ removing symlink ${symLinkFilePath}"
+            rm ${symLinkFilePath}
+          fi
+          _process "→ creating link "${DOTFILES_DIR}/${configFilePath}" "${symLinkFilePath}""
+          ln -fsnT "${DOTFILES_DIR}/${configFilePath}" "${symLinkFilePath}"
         fi
 			done
 			# set separater back to carriage return & new line break
@@ -155,7 +164,7 @@ link_dotfiles() {
 		# Reset IFS back
 		IFS=$OIFS
 		# source "${HOME}/.bash_profile"
-		source "${HOME}/.zshenv"
+		[ -f ${HOME}/.zshenv ] && source "${HOME}/.zshenv"
     exec zsh
 		[[ $? ]] && _success "All files have been copied"
 	fi
@@ -265,11 +274,10 @@ setup_git_authorship() {
 # at all. 
 install() {
   if [ "$runall" == true ]; then
-	_process "→ run all install functions"
-  download_dotfiles_with_git
-  link_dotfiles
-  # install_arch_dependencies
-    # echo "run all install functions"
+	  _process "→ run all install functions"
+    download_dotfiles_with_git
+    link_dotfiles true
+    install_arch_dependencies
     _process "→ dotfiles downloaded and linked"
     return
   fi
