@@ -103,12 +103,6 @@ link_dotfiles() {
   then
     echo "no config file ${DOTFILES_DIR}/opt/files"
   else
-    # if [ $1 = false ]
-    # then
-    # _process "→ Unlinking dotfiles in /configs"
-    # else
-    # _process "→ Symlinking dotfiles in /configs"
-    # fi
 		# Set variable for list of files
 		files="${DOTFILES_DIR}/opt/files"
 		# Store IFS separator within a temp variable
@@ -142,13 +136,11 @@ link_dotfiles() {
             rm ${symLinkFilePath}
           fi
         else
-          # _process "→ Linking ${links[$index]}"
           # Remove any existing symlinks before making a new one. The default behaviour
           # where the link is a dir is to create the link inside the dir if it exists,
           # resulting in the link being created in our real folder on the second pass.
           # It is possible to use flags '-n' and '-T' here, but just removing the link
           # first makes more sense, I think.
-
           if [ -f ${symLinkFilePath} ]
           then
             _process "→ removing symlink ${symLinkFilePath}"
@@ -163,7 +155,6 @@ link_dotfiles() {
 		done
 		# Reset IFS back
 		IFS=$OIFS
-		# source "${HOME}/.bash_profile"
 		[ -f ${HOME}/.zshenv ] && source "${HOME}/.zshenv"
     exec zsh
 		[[ $? ]] && _success "All files have been copied"

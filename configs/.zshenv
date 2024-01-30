@@ -14,6 +14,8 @@ export HISTFILE="$ZDOTDIR/.zhistory"    # History filepath
 export HISTSIZE=10000                   # Maximum events for internal history
 export SAVEHIST=10000                   # Maximum events in history file
 
+export VIMCONFIG="$XDG_CONFIG_HOME/nvim"
+
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
@@ -39,6 +41,3 @@ export FZF_DEFAULT_OPTS="--height 60% \
 --marker ⇒"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -n 10'"
 export FZF_COMPLETION_DIR_COMMANDS="cd pushd rmdir tree ls"
-
-# tmux source ${XDG_CONFIG_HOME}/tmux/tmux.conf
-
