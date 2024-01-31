@@ -1,15 +1,18 @@
-sudo pacman-key  --init
-sudo pacman-key  --populate
+sudo pacman-key --init
+sudo pacman-key --populate
 sudo pacman --needed --noconfirm -Syu
-sudo pacman --needed --noconfirm -S archlinux-keyring       # Note: ArchWSL says this is optional, but THIS PACKAGE IS MANDITORY! It should be the first one installed.
+sudo pacman --needed --noconfirm -S archlinux-keyring # Note: ArchWSL says this is optional, but THIS PACKAGE IS MANDITORY! It should be the first one installed.
 # Install Yay all in one line
 sudo pacman -S --needed --noconfirm git base-devel && git clone https://aur.archlinux.org/yay.git ${HOME}/yay && cd ${HOME}/yay && makepkg -si
 cd ${HOME}
-sudo pacman --needed --noconfirm -S openssh                                                # Install OpenSSH so we can use SSH.
-sudo pacman --needed --noconfirm -S github-cli                                             # Install this so we can use `gh` to do github command. (TODO: Is there something similar for gitlab?)
-sudo pacman --needed --noconfirm -S lolcat                                                 # Install `lolcat` (colorful cat), this will also install the Ruby programming language that it depends on.
-sudo pacman --needed --noconfirm -S bat                                                    # `bat` is like `cat`, but it looks better.
-sudo pacman --needed --noconfirm -S bat-extras fzf clang llvm rust                         # Some important tools I'll talk about them later.
+sudo pacman --needed --noconfirm -S openssh                    # Install OpenSSH so we can use SSH.
+sudo pacman --needed --noconfirm -S github-cli                 # Install this so we can use `gh` to do github command. (TODO: Is there something similar for gitlab?)
+sudo pacman --needed --noconfirm -S lolcat                     # Install `lolcat` (colorful cat), this will also install the Ruby programming language that it depends on.
+sudo pacman --needed --noconfirm -S bat                        # `bat` is like `cat`, but it looks better.
+sudo pacman --needed --noconfirm -S bat-extras clang llvm rust # Some important tools I'll talk about them later.
+# Install fzf using git clone, otherwise keybinds do not work.
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 sudo pacman --needed --noconfirm -S python-pip                                             # Python needs pip to install some packages
 sudo pacman --needed --noconfirm -S lm_sensors psutils python-psutil neofetch bashtop htop # Install these to show system information and to manage processes in a more user-friendly way
 sudo pacman --needed --noconfirm -S figlet cowsay fortune-mod cmatrix nyancat              # Command line toys, some of them are important that they install some depedencies you'll want to have around.
@@ -32,30 +35,30 @@ yay -S --needed --noconfirm zsh-theme-powerlevel10k-git # Install the powerlevel
 # echo 'source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc    # Use the Powerlevel10K theme in Zsh. (You could use it in Bash too, but I'm not going to do that.)
 # p10k configure                                                                          # Configure the Powerlevel10k prompt.
 
-sudo pacman --needed --noconfirm -S tmux                          # Install the terminal multiplexer. (We'll have some basic stuff set up in `~/.tmux.conf`)
+sudo pacman --needed --noconfirm -S tmux                            # Install the terminal multiplexer. (We'll have some basic stuff set up in `~/.tmux.conf`)
 git clone https://github.com/tmux-plugins/tpm ~/bin/tmuxPlugins/tpm # Install the TMUX plugin manager.
-sudo pacman --needed --noconfirm -S powerline                     # Install powerline. The command to enable it for tmux should be in `~/.tmux.conf`.
-sudo pacman --needed --noconfirm -S lsd                           # Use lsd (not that LSD! This one make the ls command look cool.) (I added commands to ~/.bash_aliases to use it.)
-sudo pacman --needed --noconfirm -S jq                            # Command-line JSON processor. This will be useful later. (There's also `hq` and `yq`, but I haven't tried those yet.)
-sudo pacman --needed --noconfirm -S neovim                        # Neovim is something I'm adding. It's basically a text editor based on Vim, but all the plugins are written in Lua. This should also install Lua.
-sudo pacman --needed --noconfirm -S python-neovim                 # Python 3 plugin support for Neovim
-sudo pacman --needed --noconfirm -S zsh-autosuggestions           # Enable auto suggestions in Zsh
+sudo pacman --needed --noconfirm -S powerline                       # Install powerline. The command to enable it for tmux should be in `~/.tmux.conf`.
+sudo pacman --needed --noconfirm -S lsd                             # Use lsd (not that LSD! This one make the ls command look cool.) (I added commands to ~/.bash_aliases to use it.)
+sudo pacman --needed --noconfirm -S jq                              # Command-line JSON processor. This will be useful later. (There's also `hq` and `yq`, but I haven't tried those yet.)
+sudo pacman --needed --noconfirm -S neovim                          # Neovim is something I'm adding. It's basically a text editor based on Vim, but all the plugins are written in Lua. This should also install Lua.
+sudo pacman --needed --noconfirm -S python-neovim                   # Python 3 plugin support for Neovim
+sudo pacman --needed --noconfirm -S zsh-autosuggestions             # Enable auto suggestions in Zsh
 sudo pacman --needed --noconfirm -S zsh-syntax-highlighting
 # Some extras from :
 sudo pacman --needed --noconfirm -S zoxide
-sudo pacman --needed --noconfirm -S mc ranger		# A couple of command-line file explorers. Try them out.
-sudo pacman --needed --noconfirm -S ueberzug			# View images in Ranger. More than likely, animated GIFs won't work. Also, it won't work if tmux is using a split window. Still worth installing.
-sudo pacman --needed --noconfirm -S atool			# Add this for previews in archive files.
-sudo pacman --needed --noconfirm -S highlight		# Enable code syntax highlighting when viewing source code files.
-sudo pacman --needed --noconfirm -S mediainfo		# View other information about media files.
-sudo pacman --needed --noconfirm -S poppler			# For PDF file previews
-sudo pacman --needed --noconfirm -S libcaca			# For ASCII-art image previews.
-sudo pacman --needed --noconfirm -S python-chardet		# In case of encoding dection problems.
-sudo pacman --needed --noconfirm -S perl-image-exiftool	# Show image EXIF information. This might be installed already if you installed imagemagick
-sudo pacman --needed --noconfirm -S w3m			# Provide previews of HTML and Images
-sudo pacman --needed --noconfirm -S ffmpegthumbnailer	# Designed for previewing videos, but should work for images too.
-yay -S --needed --noconfirm nishanths-license-git # Auto generate a license for your awesome software
-yay -S --needed --noconfirm git-ignore-bin  # CLI git ignore util.
-yay -S --needed --noconfirm glow  # CLI Markdow Reader.
+sudo pacman --needed --noconfirm -S mc ranger           # A couple of command-line file explorers. Try them out.
+sudo pacman --needed --noconfirm -S ueberzug            # View images in Ranger. More than likely, animated GIFs won't work. Also, it won't work if tmux is using a split window. Still worth installing.
+sudo pacman --needed --noconfirm -S atool               # Add this for previews in archive files.
+sudo pacman --needed --noconfirm -S highlight           # Enable code syntax highlighting when viewing source code files.
+sudo pacman --needed --noconfirm -S mediainfo           # View other information about media files.
+sudo pacman --needed --noconfirm -S poppler             # For PDF file previews
+sudo pacman --needed --noconfirm -S libcaca             # For ASCII-art image previews.
+sudo pacman --needed --noconfirm -S python-chardet      # In case of encoding dection problems.
+sudo pacman --needed --noconfirm -S perl-image-exiftool # Show image EXIF information. This might be installed already if you installed imagemagick
+sudo pacman --needed --noconfirm -S w3m                 # Provide previews of HTML and Images
+sudo pacman --needed --noconfirm -S ffmpegthumbnailer   # Designed for previewing videos, but should work for images too.
+yay -S --needed --noconfirm nishanths-license-git       # Auto generate a license for your awesome software
+yay -S --needed --noconfirm git-ignore-bin              # CLI git ignore util.
+yay -S --needed --noconfirm glow                        # CLI Markdow Reader.
 chsh -l
 exec zsh # Restart zsh
