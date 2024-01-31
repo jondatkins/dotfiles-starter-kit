@@ -24,6 +24,13 @@ function gitClone() {
   git clone https://github.com/$1
 }
 
+# shortcut for git add commit push. e.g. acp 'my cool commit'
+function acp() {
+  git add .
+  git commit -m "$1"
+  git push
+}
+
 function tmuxAttach() {
 tmux attach-session -t $1
 }
@@ -46,3 +53,4 @@ function nvimPaste() {
     powershell.exe Get-Clipboard | tr -d '\r' | sed -z '$ s/\n$//'
   fi
 }
+
