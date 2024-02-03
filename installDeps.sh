@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 sudo pacman-key --init
 sudo pacman-key --populate
 sudo pacman --needed --noconfirm -Syu

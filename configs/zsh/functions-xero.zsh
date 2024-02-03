@@ -15,7 +15,7 @@ function t() {
 }
 
 #█▓▒░ {de,}compression
-uz() {
+unzip() {
   if [[ -f $1 ]]; then
     case $1 in
       *.tar.bz2)  tar xvjf "$1" ;;
@@ -36,7 +36,8 @@ uz() {
     echo "'$1' not a valid file"
   fi
 }
-z() {
+
+zip() {
 	if [[ -f "$1" ||  -d "$1" ]]; then
 		tar zcvf "${1}_$(date '+%Y-%m-%d').tar.gz" "$1";
 	else

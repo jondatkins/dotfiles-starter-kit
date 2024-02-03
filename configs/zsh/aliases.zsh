@@ -1,8 +1,5 @@
 #!/bin/zsh
 # Aliases...
-alias c='clear'
-alias up='cd ..'
-alias e='$EDITOR'
 
 # We're using lsd! The colors!
 if [ -x "$(command -v lsd)" ]; then
@@ -19,12 +16,13 @@ else
 fi
 alias makeEx='chmod u+x *.sh'
 alias cls='clear'
+alias clr='clear'
 # aliases from Elijah Manor's dotfiles
 alias weather="curl -4 wttr.in/derby"
 alias vim="nvim"
-alias vimrcs="source ~/.config/nvim/init.lua"
-alias tmuxrc="vim ${DOTFILES}/tmux/.config/tmux/tmux.conf"
-alias tmuxrcs="tmux source-file ${DOTFILES}/tmux/.config/tmux/tmux.conf"
+# alias vimrcs="source ~/.config/nvim/init.lua"
+# alias tmuxrc="vim ${DOTFILES}/tmux/.config/tmux/tmux.conf"
+# alias tmuxrcs="tmux source-file ${DOTFILES}/tmux/.config/tmux/tmux.conf"
 # TODO: Does this command need any other arguments (e.g. session number?)
 alias retmux='tmux attach'
 alias beep='echo -e "\a"'

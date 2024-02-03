@@ -1,23 +1,42 @@
+#!/usr/bin/env bash
 #█▓▒░ aliases
 alias c="clear"
+alias cls="clear"
+alias clr="clear"
 alias ll="ls -lahF --color=always"
+# We're using lsd! The colors!
+if [ -x "$(command -v lsd)" ]; then
+    alias l='lsd -la'
+    alias ls='lsd'
+    alias ll='lsd -l'
+    alias la='lsd -la'
+else
+  k
+    alias l='ls -la'
+    alias ls='ls'
+    alias ll='ls -l'
+    alias la='ls -la'
+fi
 alias e="$EDITOR"
 alias se="sudo $EDITOR"
 alias ec='nvim --cmd ":lua vim.g.noplugins=1" ' #nvim --clean
-alias fuck='sudo $(fc -ln -1)'
-alias g="git"
-alias y="yank"
-alias k="vpnns -- kubectl"
-alias kx="kubectx"
-alias k9s="vpnns -- k9s"
-alias tgp="vpnns -- terragrunt plan"
-alias tga="vpnns -- terragrunt apply"
+
+#general
+alias weather="curl -4 wttr.in/derby"
+# alias vim="nvim"
+
+#source config
+alias vimrcs="source ${XDG_CONFIG_HOME}/nvim/init.lua"
+alias tmuxrc="vim ${XDG_CONFIG_HOME}/tmux/tmux.conf"
+alias tmuxrcs="tmux source-file ${XDG_CONFIG_HOME}/tmux/tmux.conf"
 
 #lazy
 alias "cd.."="cd ../"
+alias up="cd .."
 alias rmrf="rm -rf"
 alias psef="ps -ef"
 alias ZZ="exit"
+alias makeEx="chmod u+x"
 
 #git
 alias ga="git add"
@@ -60,17 +79,24 @@ alias exzsh='exec zsh'
 alias clip.exe='clip'
 alias explorer.exe='explorer'
 
+#last file modified / touched
+alias lastFile='ls -t | head -n1'
+# handy node shortcut
+alias nrun='npm run dev'
+
+
+# Alias: ipinfo
+# Info: Look up your IP info. This also shows geolocation and ISP information. This returns a JSON response.
+alias ipinfo='curl ipinfo.io'
+alias myip="curl http://ipecho.net/plain; echo"
 #curl
 alias curlh="curl -sILX GET"
 alias curld="curl -A \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36\""
 alias curlm="curl -A \"Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_3 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) CriOS/28.0.1500.12 Mobile/10B329 Safari/8536.25\""
 
-#security
-alias rip="sudo srm -dvrl"
-alias ripfull="sudo srm -dlv"
-alias checkrootkits="sudo rkhunter --update; sudo rkhunter --propupd; sudo rkhunter --check"
-alias checkvirus="clamscan --recursive=yes --infected /home"
-alias updateantivirus="sudo freshclam"
+#tmux
+alias retmux='tmux attach'
+alias tmxKill="tmux kill-session -t 0"
 
 #silly
 alias xyzzy="echo nothing happens"

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 LOG="${HOME}/dotfiles.log"
 GITHUB_USER="jonkinz"
 GITHUB_REPO="dotfiles-starter-kit"
@@ -14,26 +14,25 @@ unlink=false
 install=false
 runall=true
 
-while getopts dlui flag
-do
-    case "${flag}" in
-        d) 
-          download=true
-          runall=false
-        ;;
-        l)
-          link=true
-          runall=false
-        ;;
-        u)
-          unlink=true
-          runall=false
-        ;;
-        i) 
-          install=true
-          runall=false
-        ;;
-    esac
+while getopts dlui flag; do
+	case "${flag}" in
+	d)
+		download=true
+		runall=false
+		;;
+	l)
+		link=true
+		runall=false
+		;;
+	u)
+		unlink=true
+		runall=false
+		;;
+	i)
+		install=true
+		runall=false
+		;;
+	esac
 done
 
 _process() {
@@ -66,25 +65,24 @@ download_dotfiles() {
 }
 
 download_dotfiles_with_git() {
-  # Don't download if dotfiles dir is already installed.
-  if [ -d "$DOTFILES_DIR" ]; then
-    _process "→ $DOTFILES_DIR already downloaded"
-    return
-  fi
-  _process "→ Installing git if needed"
-  if ! command -v git &> /dev/null
-  then
-    _process "→ Installing git"
-    sudo pacman -S --needed --noconfirm git
-  else
-    _process "→ git is already installed"
-  fi
-  cd ${HOME}
-  rm -rf ${DOTFILES_DIR}
+	# Don't download if dotfiles dir is already installed.
+	if [ -d "$DOTFILES_DIR" ]; then
+		_process "→ $DOTFILES_DIR already downloaded"
+		return
+	fi
+	_process "→ Installing git if needed"
+	if ! command -v git &>/dev/null; then
+		_process "→ Installing git"
+		sudo pacman -S --needed --noconfirm git
+	else
+		_process "→ git is already installed"
+	fi
+	cd ${HOME}
+	rm -rf ${DOTFILES_DIR}
 	_process "→ cloing dotfiles repo from:"
 	_process "→ https://github.com/${GITHUB_USER}/${GITHUB_REPO}"
-  git clone "https://github.com/${GITHUB_USER}/${GITHUB_REPO}" ${DOTFILES_DIR}
- 
+	git clone "https://github.com/${GITHUB_USER}/${GITHUB_REPO}" ${DOTFILES_DIR}
+
 	[[ $? ]] && _success "${DOTFILES_DIR} created, repository cloned"
 	# Change to the dotfiles directory
 	cd "${DOTFILES_DIR}"
@@ -92,17 +90,16 @@ download_dotfiles_with_git() {
 
 # Takes a boolean arg. If true, link the files, if false, unlink them.
 link_dotfiles() {
-  # Create config dir here if it doesn't already exist
-  if [ ! -d $CONFIG_DIR ]; then
-    _process "→ $CONFIG_DIR "
-    mkdir $CONFIG_DIR
-    return
-  fi
+	# Create config dir here if it doesn't already exist
+	if [ ! -d $CONFIG_DIR ]; then
+		_process "→ $CONFIG_DIR "
+		mkdir $CONFIG_DIR
+		return
+	fi
 	# symlink files to the HOME directory.
-	if ! [[ -f "${DOTFILES_DIR}/opt/files" ]]
-  then
-    echo "no config file ${DOTFILES_DIR}/opt/files"
-  else
+	if ! [[ -f "${DOTFILES_DIR}/opt/files" ]]; then
+		echo "no config file ${DOTFILES_DIR}/opt/files"
+	else
 		# Set variable for list of files
 		files="${DOTFILES_DIR}/opt/files"
 		# Store IFS separator within a temp variable
@@ -118,45 +115,41 @@ link_dotfiles() {
 				IFS=$' '
 				# create an array of line items
 				file=(${links[$index]})
-        configFilePath=${file[0]}
-        symLinkFilePath=${file[1]}
-        if  [ ! $configFilePath ] || [ ! $symLinkFilePath ]
-        then
-          process "→ link script expects 'files' data in the form:"
-          process "→ path/to/config path/to/symlink"
-          process "→ Your config is:"
-          process "→ ${configFilePath} ${symLinkFilePath}"
-          return
-        fi
-        if [ "$1" = false ]
-        then
-          if [ -f ${symLinkFilePath} ]
-          then
-            _process "→ removing symlink ${symLinkFilePath}"
-            rm ${symLinkFilePath}
-          fi
-        else
-          # Remove any existing symlinks before making a new one. The default behaviour
-          # where the link is a dir is to create the link inside the dir if it exists,
-          # resulting in the link being created in our real folder on the second pass.
-          # It is possible to use flags '-n' and '-T' here, but just removing the link
-          # first makes more sense, I think.
-          if [ -f ${symLinkFilePath} ]
-          then
-            _process "→ removing symlink ${symLinkFilePath}"
-            rm ${symLinkFilePath}
-          fi
-          _process "→ creating link "${DOTFILES_DIR}/${configFilePath}" "${symLinkFilePath}""
-          ln -fsnT "${DOTFILES_DIR}/${configFilePath}" "${symLinkFilePath}"
-        fi
+				configFilePath=${file[0]}
+				symLinkFilePath=${file[1]}
+				if [ ! $configFilePath ] || [ ! $symLinkFilePath ]; then
+					process "→ link script expects 'files' data in the form:"
+					process "→ path/to/config path/to/symlink"
+					process "→ Your config is:"
+					process "→ ${configFilePath} ${symLinkFilePath}"
+					return
+				fi
+				if [ "$1" = false ]; then
+					if [ -f ${symLinkFilePath} ]; then
+						_process "→ removing symlink ${symLinkFilePath}"
+						rm ${symLinkFilePath}
+					fi
+				else
+					# Remove any existing symlinks before making a new one. The default behaviour
+					# where the link is a dir is to create the link inside the dir if it exists,
+					# resulting in the link being created in our real folder on the second pass.
+					# It is possible to use flags '-n' and '-T' here, but just removing the link
+					# first makes more sense, I think.
+					if [ -f ${symLinkFilePath} ]; then
+						_process "→ removing symlink ${symLinkFilePath}"
+						rm ${symLinkFilePath}
+					fi
+					_process "→ creating link "${DOTFILES_DIR}/${configFilePath}" "${symLinkFilePath}""
+					ln -fsnT "${DOTFILES_DIR}/${configFilePath}" "${symLinkFilePath}"
+				fi
 			done
 			# set separater back to carriage return & new line break
 			IFS=$'\r\n'
 		done
 		# Reset IFS back
 		IFS=$OIFS
-		[ -f ${HOME}/.zshenv ] && source "${HOME}/.zshenv"
-    exec zsh
+		# [ -f ${HOME}/.zshenv ] && source "${HOME}/.zshenv"
+		exec zsh
 		[[ $? ]] && _success "All files have been copied"
 	fi
 }
@@ -183,7 +176,7 @@ install_node() {
 }
 
 install_arch_dependencies() {
-  source installDeps.sh
+	source installDeps.sh
 }
 
 install_formulae() {
@@ -262,34 +255,33 @@ setup_git_authorship() {
 # If a flag or flags are set, 'runall' should be false, so other functions should run as
 # expected.
 # N.B. Some of the functions, e.g. the node install and homebrew functions are not called
-# at all. 
+# at all.
 install() {
-  if [ "$runall" == true ]; then
-	  _process "→ run all install functions"
-    download_dotfiles_with_git
-    link_dotfiles true
-    install_arch_dependencies
-    _process "→ dotfiles downloaded and linked"
-    return
-  fi
+	if [ "$runall" == true ]; then
+		_process "→ run all install functions"
+		download_dotfiles_with_git
+		link_dotfiles true
+		install_arch_dependencies
+		_process "→ dotfiles downloaded and linked"
+		return
+	fi
 
-  if [ "$download" == true ]; then
-    echo "download dotfiles here"
-    download_dotfiles_with_git
-  fi
-  if [ "$unlink" == true ]; then
-    echo "unlink dotfiles"
-    link_dotfiles false
-  fi
-  if [ "$link" == true ]; then
-    echo "link dotfiles"
-    link_dotfiles true
-  fi
-  if [ "$install" == true ]; then
-    echo "install deps"
-    install_arch_dependencies
-  fi
+	if [ "$download" == true ]; then
+		echo "download dotfiles here"
+		download_dotfiles_with_git
+	fi
+	if [ "$unlink" == true ]; then
+		echo "unlink dotfiles"
+		link_dotfiles false
+	fi
+	if [ "$link" == true ]; then
+		echo "link dotfiles"
+		link_dotfiles true
+	fi
+	if [ "$install" == true ]; then
+		echo "install deps"
+		install_arch_dependencies
+	fi
 }
 
 install
-
