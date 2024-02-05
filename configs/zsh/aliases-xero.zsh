@@ -75,9 +75,13 @@ alias proxychains="proxychains -q"
 alias ag="ag --color --color-line-number '0;35' --color-match '46;30' --color-path '4;36'"
 alias aga="ag --hidden --color --color-line-number '0;35' --color-match '46;30' --color-path '4;36'"
 alias tree='tree -CAFa -I "CVS|*.*.package|.svn|.git|.hg|node_modules|bower_components" --dirsfirst'
+
+
 alias exzsh='exec zsh'
-alias clip.exe='clip'
-alias explorer.exe='explorer'
+alias pacinstall='sudo pacman -S'
+alias pacremove='sudo pacman -Rs'
+# alias clip.exe='clip'
+# alias explorer.exe='explorer'
 
 #last file modified / touched
 alias lastFile='ls -t | head -n1'
