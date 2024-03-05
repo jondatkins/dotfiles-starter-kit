@@ -14,6 +14,8 @@ sudo pacman --needed --noconfirm -S bat-extras clang llvm rust # Some important 
 # Install fzf using git clone, otherwise keybinds do not work.
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
+sudo pacman --needed --noconfirm -S fd                                                     # Rust version of find
+sudo pacman --needed --noconfirm -S tree                                                   # Handy file tree view, used by fzf
 sudo pacman --needed --noconfirm -S python-pip                                             # Python needs pip to install some packages
 sudo pacman --needed --noconfirm -S lm_sensors psutils python-psutil neofetch bashtop htop # Install these to show system information and to manage processes in a more user-friendly way
 sudo pacman --needed --noconfirm -S figlet cowsay fortune-mod cmatrix nyancat              # Command line toys, some of them are important that they install some depedencies you'll want to have around.
@@ -58,8 +60,11 @@ sudo pacman --needed --noconfirm -S python-chardet      # In case of encoding de
 sudo pacman --needed --noconfirm -S perl-image-exiftool # Show image EXIF information. This might be installed already if you installed imagemagick
 sudo pacman --needed --noconfirm -S w3m                 # Provide previews of HTML and Images
 sudo pacman --needed --noconfirm -S ffmpegthumbnailer   # Designed for previewing videos, but should work for images too.
-yay -S --needed --noconfirm nishanths-license-git       # Auto generate a license for your awesome software
-yay -S --needed --noconfirm git-ignore-bin              # CLI git ignore util.
-yay -S --needed --noconfirm glow                        # CLI Markdow Reader.
+curl -s https://cht.sh/:cht.sh | sudo tee /usr/local/bin/cht.sh && sudo chmod +x /usr/local/bin/cht.sh
+sudo pacman --needed --noconfirm -S rlwrap        # Needed for chubin's cht.sh / cheat sheet.
+yay -S --needed --noconfirm nishanths-license-git # Auto generate a license for your awesome software
+yay -S --needed --noconfirm git-ignore-bin        # CLI git ignore util.
+yay -S --needed --noconfirm glow                  # CLI Markdow Reader.
 chsh -l
+chsh -s /bin/zsh
 exec zsh # Restart zsh

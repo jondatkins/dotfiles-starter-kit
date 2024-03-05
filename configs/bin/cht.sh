@@ -580,9 +580,9 @@ cmd_cd() {
 }
 
 cmd_copy() {
-	if [ -z "$DISPLAY" ]; then
-		echo copy: supported only in the Desktop version
-	elif [ -z "$input" ]; then
+	# if [ -z "$DISPLAY" ]; then
+	# 	echo copy: supported only in the Desktop version
+	if [ -z "$input" ]; then
 		echo copy: Make at least one query first.
 	else
 		curl -s "${CHTSH_URL}"/"$(get_query_options "$query"?T)" >"$TMP1"
@@ -590,9 +590,11 @@ cmd_copy() {
 			if [ "$XDG_SESSION_TYPE" = wayland ]; then
 				wl-copy <"$TMP1"
 			else
+				echo xsel
 				xsel -bi <"$TMP1"
 			fi
 		else
+			echo pbcopy
 			pbcopy <"$TMP1"
 		fi
 		echo "copy: $(wc -l "$TMP1" | awk '{print $1}') lines copied to the selection"
@@ -600,9 +602,9 @@ cmd_copy() {
 }
 
 cmd_ccopy() {
-	if [ -z "$DISPLAY" ]; then
-		echo copy: supported only in the Desktop version
-	elif [ -z "$input" ]; then
+	# if [ -z "$DISPLAY" ]; then
+	# 	echo copy: supported only in the Desktop version
+	if [ -z "$input" ]; then
 		echo copy: Make at least one query first.
 	else
 		curl -s "${CHTSH_URL}"/"$(get_query_options "$query"?TQ)" >"$TMP1"

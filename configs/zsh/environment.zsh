@@ -1,25 +1,11 @@
 #█▓▒░ clean home
 export XDG_CONFIG_HOME="$HOME"/.config
-export NAVE_DIR="$HOME"/.local/lib/nodejs
-export CARGO_HOME="$HOME"/.local/lib/cargo
-export RUSTUP_HOME="$HOME"/.local/lib/rustup
-export GOPATH="$HOME"/.local/lib/go
 export XDG_DATA_HOME="$HOME"/.local/share
 export XDG_CACHE_HOME="$HOME"/.local/cache
 export XDG_STATE_HOME="$HOME"/.local/state
 export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:=/tmp}"
 export ZDOTDIR="$HOME"/.config/zsh
-export DOTFILES="$HOME"/dotfiles_starter_kit
-export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
-export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
-export GNUPGHOME="$XDG_DATA_HOME"/gpg
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
-export NPM_CONFIG_PREFIX="$XDG_DATA_HOME"/npm
-export NPM_CONFIG_CACHE="$XDG_CACHE_HOME"/npm
-export KUBECONFIG="$XDG_CONFIG_HOME"/kube/config
-export KUBECACHEDIR="$XDG_RUNTIME_DIR"/kube
-export STARSHIP_CACHE="$XDG_CACHE_HOME"/starship
-export TFENV="$XDG_DATA_HOME"/terraform
+export DOTFILES="$HOME"/dotfiles-starter-kit
 
 #█▓▒░ paths
 # export PATH=/usr/sbin:/usr/local/sbin:$HOME/.local/bin:$CARGO_HOME/bin:$GOPATH/bin:$NPM_CONFIG_PREFIX/bin:$TFENV/bin:$XDG_DATA_HOME/nvim/mason/bin:$PATH
@@ -39,7 +25,7 @@ export PATH=$HOME/.local/share/nvim/mason/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME/.local/bin/java/jdk-20.0.1/bin:$PATH
 export PATH=$HOME/.local/bin/gradle/gradle-8.1.1/bin:$PATH
-
+[ -z ${WSLENV+x} ] || export PATH="${PATH:+"$PATH:"}$HOME/bin/win-bash-xclip-xsel"
 
 #█▓▒░ man
 export MANPAGER='nvim --cmd ":lua vim.g.noplugins=1" +Man!'
@@ -71,3 +57,5 @@ export MOSH_TITLE_NOPREFIX=1
 #█▓▒░ gpg cli in the tty
 GPG_TTY=$(tty)
 export GPG_TTY
+# launch windows chrome from wsl
+export BROWSER='/mnt/c/Program Files (x86)/Google/Chrome/Application/chrome.exe' 

@@ -1,4 +1,3 @@
-
 # shell
 set -g default-command $SHELL
 set -g default-shell $SHELL
@@ -90,7 +89,7 @@ set -g @plugin 'wfxr/tmux-fzf-url'
 set -g @plugin 'omerxx/tmux-sessionx'
 # set -g @thumbs-key F
 # set -g @thumbs-command 'echo -n {} | clip.exe'
-set -g @thumbs-command 'echo -n {} | pbcopy'
+set -g @thumbs-command 'echo -n {} | pbcopy
 # I recommend using `o` if not already in use, for least key strokes when launching
 set -g @sessionx-bind 'o'
 set -g @sessionx-x-path '~/dotfiles-starter-kit'

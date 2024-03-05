@@ -1,9 +1,11 @@
+#!/bin/zsh
 unsetopt BEEP
 zle_highlight=('paste:none')
 
 
 # source all .zsh config
 for config (~/.config/zsh/*.zsh) source $config
+
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 eval "$(zoxide init zsh)"
@@ -16,3 +18,5 @@ then
 else
   echo "No file at $HOME/.config/zsh/p10k2.zsh"
 fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
